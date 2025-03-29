@@ -89,7 +89,13 @@ fn main() -> ! {
             }
             timer.cancel().unwrap();
 
-            rprintln!("{:.3}", time);
+            if time < 60.0 {
+                rprintln!("{:.3}", time);
+            } else {
+                let minutes = time as i32 / 60;
+                let seconds = time % 60.0;
+                rprintln!("{}:{:.3}", minutes, seconds);
+            }
 
             red_led.set_high();
             green_led.set_high();
