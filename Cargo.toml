@@ -10,3 +10,9 @@ stm32f4xx-hal = { version = "0.22.1", features = ["stm32f446"] }
 panic-halt = "0.2.0"
 rtt-target = "0.6.1"
 
+[profile.release]
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = 'abort'
+strip = true
