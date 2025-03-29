@@ -20,6 +20,8 @@ fn panic(i: &PanicInfo) -> ! {
     loop {}
 }
 
+const MIN_FORCE: u16 = 500;
+
 #[entry]
 fn main() -> ! {
     let p = pac::Peripherals::take().unwrap();
@@ -51,7 +53,7 @@ fn main() -> ! {
         let mut sample2 = adc.convert(&sensor2, SampleTime::Cycles_480) / 4;
         // rprintln!("{} | {}", sample1, sample2);
 
-        if sample1 > 800 && sample2 > 800 {
+        if sample1 > MIN_FORCE && sample2 > MIN_FORCE {
             time_over_boundary += 1;
         } else {
             time_over_boundary = 0;
@@ -62,7 +64,7 @@ fn main() -> ! {
             red_led.set_low();
             green_led.set_high();
             blue_led.set_low();
-            while sample1 > 800 && sample2 > 800 {
+            while sample1 > MIN_FORCE && sample2 > MIN_FORCE {
                 sample1 = adc.convert(&sensor1, SampleTime::Cycles_480) / 4;
                 sample2 = adc.convert(&sensor2, SampleTime::Cycles_480) / 4;
             }
@@ -73,7 +75,7 @@ fn main() -> ! {
 
             timer.start(1.millis()).unwrap();
             let mut blink_at = 0;
-            while sample1 < 800 || sample2 < 800 || time < 0.001 {
+            while sample1 < MIN_FORCE || sample2 < MIN_FORCE || time < 0.001 {
                 if timer.wait().is_ok() {
                     time += 0.001;
                     sample1 = adc.convert(&sensor1, SampleTime::Cycles_480) / 4;
@@ -92,7 +94,7 @@ fn main() -> ! {
             red_led.set_high();
             green_led.set_high();
             blue_led.set_low();
-            while sample1 > 800 && sample2 > 800 {
+            while sample1 > MIN_FORCE && sample2 > MIN_FORCE {
                 sample1 = adc.convert(&sensor1, SampleTime::Cycles_480) / 4;
                 sample2 = adc.convert(&sensor2, SampleTime::Cycles_480) / 4;
             }
