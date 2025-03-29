@@ -1,5 +1,5 @@
 [package]
-name = "rust-ili9341-init"
+name = "open-mat"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,7 +8,5 @@ cortex-m = "0.7"
 cortex-m-rt = "0.7.5"
 stm32f4xx-hal = { version = "0.22.1", features = ["stm32f446"] }
 panic-halt = "0.2.0"
-embedded-graphics = "0.8.1"
-tinybmp = "0.6.0"
 rtt-target = "0.6.1"
 
